@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Frogger Poker</title>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="//oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+            <div class="info">Swip left or right to change cards</div>
+            <div class="info">Tap to reset</div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+            <div id="content" class="span12">
+                <div id="card_holder" class="card"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="//code.jquery.com/jquery-2.1.3.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+<script src="//hammerjs.github.io/dist/hammer.js"></script>
+<script type="text/javascript" >
+$( document ).ready(function() {
+
+    var start = current = 0;
+    var cards = ['0','&frac12;','1','2','3','5','8','13','20','40','100','?'];
+
+    $('#card_holder').html(cards[start]);
+
+    Hammer($('#card_holder').get(0)).on('swiperight', function(e) {
+        $('#card_holder').html(previousCard());
+    });
+
+    Hammer($('#card_holder').get(0)).on('swipeleft', function(e) {
+        $('#card_holder').html(nextCard());
+    });
+
+    Hammer($('#card_holder').get(0)).on('tap', function(e) {
+        $('#card_holder').html(initCard());
+    });
+
+    function initCard() {
+        start = current = 0;
+        return cards[current];
+    }
+
+    function previousCard() {
+        current -= 1;
+        if (current < 0) {
+            current = (cards.length - 1);
+        }
+        return cards[current];
+    }
+
+    function nextCard() {
+        current += 1;
+        if (current > (cards.length - 1)) {
+            current = 0;
+        }
+        return cards[current];
+    }
+
+});
+</script>
+</body>
+</html>
+
